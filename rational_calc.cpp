@@ -6,32 +6,32 @@
 
 Rational_t rational_calc::add (Rational_t one, Rational_t two) {
     Rational_t result;
-    result.denominator = one.denominator * two.denominator;
-    result.numerator = (one.numerator * two.denominator) + (two.numerator * one.denominator);
+    result.set_den(one.den() * two.den());
+    result.set_num((one.num() * two.den()) + (two.num() * one.den()));
 
-    auto common_divisor = Rational_t::gcd (result.numerator, result.denominator);
+    auto common_divisor = Rational_t::gcd (result.num(), result.den());
 
-    result.numerator /= common_divisor;
-    result.denominator /= common_divisor;
-    if (result.denominator < 0) {
-        result.numerator *= -1;
-        result.denominator *= -1;
+    result.set_num((result.num() / common_divisor));
+    result.set_den(result.den() / common_divisor);
+    if (result.den() < 0) {
+        result.set_num(result.num() * -1);
+        result.set_den(result.den() * -1);
     }
     return result;
 }
 
 Rational_t rational_calc::subtract (Rational_t one, Rational_t two) {
     Rational_t result;
-    result.denominator = one.denominator * two.denominator;
-    result.numerator = (one.numerator * two.denominator) - (two.numerator * one.denominator);
+    result.set_den(one.den() * two.den());
+    result.set_num((one.num() * two.den()) - (two.num() * one.den()));
 
-    auto common_divisor = Rational_t::gcd (result.numerator, result.denominator);
+    auto common_divisor = Rational_t::gcd (result.num(), result.den());
 
-    result.numerator /= common_divisor;
-    result.denominator /= common_divisor;
-    if (result.denominator < 0) {
-        result.numerator *= -1;
-        result.denominator *= -1;
+    result.set_num((result.num() / common_divisor));
+    result.set_den(result.den() / common_divisor);
+    if (result.den() < 0) {
+        result.set_num(result.num() * -1);
+        result.set_den(result.den() * -1);
     }
     return result;
 }
@@ -39,28 +39,28 @@ Rational_t rational_calc::subtract (Rational_t one, Rational_t two) {
 Rational_t rational_calc::multiply (Rational_t one, Rational_t two) {
     Rational_t result;
 
-    result.numerator = one.numerator * two.numerator;
-    result.denominator = one.denominator * two.denominator;
+    result.set_num(one.num() * two.num());
+    result.set_den(one.den() * two.den());
 
     if (result.is_nan()) {
         result = Rational_t(0,0);
         return result;
     }
 
-    auto common_divisor = Rational_t::gcd (result.numerator, result.denominator);
-    result.numerator /= common_divisor;
-    result.denominator /= common_divisor;
-    if (result.denominator < 0) {
-        result.numerator *= -1;
-        result.denominator *= -1;
+    auto common_divisor = Rational_t::gcd (result.num(), result.den());
+    result.set_num(result.num() / common_divisor);
+    result.set_den(result.den() / common_divisor);
+    if (result.den() < 0) {
+        result.set_num(result.num() * -1);
+        result.set_den(result.den() * -1);
     }
     return result;
 }
 
 Rational_t rational_calc::divide (Rational_t one, Rational_t two) {
-    auto temp {two.numerator};
-    two.numerator = two.denominator;
-    two.denominator = temp;
+    auto temp {two.num()};
+    two.set_num(two.den());
+    two.set_den(temp);
 
     Rational_t result = multiply(one, two);
     return result;
@@ -68,15 +68,15 @@ Rational_t rational_calc::divide (Rational_t one, Rational_t two) {
 
 Rational_t rational_calc::power(Rational_t one, int exponent) {
     Rational_t result;
-    result.numerator = pow(one.numerator, exponent);
-    result.denominator = pow(one.denominator, exponent);
+    result.set_num(pow(one.num(), exponent));
+    result.set_den(pow(one.den(), exponent));
 
-    auto common_divisor = Rational_t::gcd (result.numerator, result.denominator);
-    result.numerator /= common_divisor;
-    result.denominator /= common_divisor;
-    if (result.denominator < 0) {
-        result.numerator *= -1;
-        result.denominator *= -1;
+    auto common_divisor = Rational_t::gcd (result.num(), result.den());
+    result.set_num(result.num() / common_divisor);
+    result.set_den(result.den() / common_divisor);
+    if (result.den() < 0) {
+        result.set_num(result.num() * -1);
+        result.set_den(result.den() * -1);
     }
 
     return result;

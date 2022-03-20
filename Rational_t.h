@@ -10,11 +10,11 @@
 #include <cmath>
 
 class Rational_t {
-public:
+private:
     int numerator{};
     int denominator{};
-    std::string fraction;
 
+public:
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * Creation of a simplified rational object with a given numerator and denominator.
      * @param   numerator           The numerator to be given.
