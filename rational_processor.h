@@ -10,7 +10,6 @@
 #include <fstream>
 #include <string>
 
-#include "Rational_t.h"
 #include "rational_calc.h"
 
 class rational_processor {
